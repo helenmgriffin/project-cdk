@@ -1,4 +1,4 @@
-﻿using Amazon.CDK;
+using Amazon.CDK;
 using Amazon.CDK.AWS.CodeCommit;
 using Amazon.CDK.AWS.CodePipeline;
 using Amazon.CDK.AWS.CodePipeline.Actions;
@@ -20,14 +20,14 @@ namespace ProjectCdk
             var sourceArtifact = new Artifact_();
             // Defines the artifact representing the cloud assembly 
             // (cloudformation template + all other assets)
-            var cloudAssemblyArtifact = new Artifact_();
+            var cloudAssemblyArtifact = new Artifact_(); 
 
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline
             var pipeline = new CdkPipeline(this, "Pipeline", new CdkPipelineProps
             {
                 PipelineName = "ProjectPipeline",
-                CloudAssemblyArtifact = cloudAssemblyArtifact,
+                CloudAssemblyArtifact = cloudAssemblyArtifact, 
 
                 // Generates the source artifact from the repo we created in the last step
                 SourceAction = new CodeCommitSourceAction(new CodeCommitSourceActionProps

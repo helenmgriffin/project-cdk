@@ -6,7 +6,7 @@ using Amazon.CDK.Pipelines;
 
 namespace ProjectCdk
 {
-    public class ProjectPipelineStack: Stack
+    public class ProjectPipelineStack : Stack
     {
         public ProjectPipelineStack(Construct parent, string id, IStackProps props = null) : base(parent, id, props)
         {
@@ -16,11 +16,8 @@ namespace ProjectCdk
                 RepositoryName = "ProjectRepo"
             });
 
-            // Pipeline code goes here
-
             // Defines the artifact representing the sourcecode
             var sourceArtifact = new Artifact_();
-
             // Defines the artifact representing the cloud assembly 
             // (cloudformation template + all other assets)
             var cloudAssemblyArtifact = new Artifact_();
@@ -46,7 +43,12 @@ namespace ProjectCdk
                     SourceArtifact = sourceArtifact,  // Where to get source code to build
                     CloudAssemblyArtifact = cloudAssemblyArtifact,  // Where to place built source
 
-                    InstallCommand = "npm install -g aws-cdk && sudo apt-get install -y dotnet-sdk-3.1",
+                    //InstallCommands = new[]
+                    //{
+                    //    "npm install -g aws-cdk",
+                    //    "sudo apt-get install -y dotnet-sdk-3.1"
+                    //},
+                    InstallCommand = "npm install -g aws-cdk",
                     BuildCommand = "dotnet build" // Language-specific build cmd
                 })
             });

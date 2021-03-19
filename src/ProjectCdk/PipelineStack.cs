@@ -49,7 +49,9 @@ namespace ProjectCdk
                     //    "sudo apt-get install -y dotnet-sdk-3.1"
                     //},
                     InstallCommand = "npm install -g aws-cdk",
-                    BuildCommand = "dotnet build" // Language-specific build cmd
+                    BuildCommand = "dotnet build", // Language-specific build cmd
+                    Subdirectory = "src/ProjectCdk/ProjectCdk.csproj"
+
                 })
             });
         }

@@ -6,10 +6,15 @@ namespace ProjectCdk
     {
         public static void Main(string[] args)
         {
+            //change the entry point to deploy our pipeline. no longer want the main CDK application to deploy the original app.
             var app = new App();
-            new ProjectCdkStack(app, "ProjectCdkStack");
+            new ProjectPipelineStack(app, "ProjectPipelineStack");
 
             app.Synth();
+            //var app = new App();
+            //new ProjectCdkStack(app, "ProjectCdkStack");
+
+            //app.Synth();
         }
     }
 }

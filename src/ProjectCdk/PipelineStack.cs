@@ -45,7 +45,7 @@ namespace ProjectCdk
 
                     //InstallCommands = new[]
                     //{
-                    //    "npm install -g aws-cdk",
+                    //    "npm install -g aws-cdk",   
                     //    "sudo apt-get install -y dotnet-sdk-3.1"
                     //},
                     InstallCommand = "npm install -g aws-cdk",

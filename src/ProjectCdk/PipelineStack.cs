@@ -20,7 +20,7 @@ namespace ProjectCdk
             var sourceArtifact = new Artifact_();
             // Defines the artifact representing the cloud assembly 
             // (cloudformation template + all other assets)
-            var cloudAssemblyArtifact = new Artifact_();
+            var cloudAssemblyArtifact = new Artifact_(); 
 
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline

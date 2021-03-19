@@ -50,7 +50,7 @@ namespace ProjectCdk
                     //},
                     //InstallCommand = "npm install -g aws-cdk",
                     InstallCommand = "npm install -g aws-cdk && wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb && apt-get update && apt-get install -y apt-transport-https && apt-get update && apt-get install -y dotnet-sdk-3.1",
-                    BuildCommand = "dotnet build **/*.csproj", // Language-specific build cmd
+                    BuildCommand = "dotnet build", // Language-specific build cmd
                     //Subdirectory = "ProjectRepo/src/ProjectCdk.sln"
 
                 })

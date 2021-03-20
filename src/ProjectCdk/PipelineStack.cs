@@ -55,6 +55,11 @@ namespace ProjectCdk
 
                 })
             });
+
+            //add stage to the pipeline
+            var deploy = new ProjectPipelineStage(this, "Deploy");
+            //add that stage to our pipeline
+            var deployStage = pipeline.AddApplicationStage(deploy);
         }
     }
 }

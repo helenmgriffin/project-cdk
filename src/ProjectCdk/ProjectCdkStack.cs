@@ -29,6 +29,12 @@ namespace ProjectCdk
             {
                 Handler = helloWithCounter.Handler
             });
+
+            this.HCEndpoint = new CfnOutput(this, "GatewayUrl", new CfnOutputProps
+            {
+                Value = gateway.Url
+            });
+
             // Defines a new TableViewer resource
             var tv = new TableViewer(this, "ViewerHitCount", new TableViewerProps
             {
@@ -38,13 +44,10 @@ namespace ProjectCdk
 
             this.HCViewerUrl = new CfnOutput(this, "TableViewerUrl", new CfnOutputProps
             {
-                Value = gateway.Url
+                Value = tv.Endpoint
             });
 
-            this.HCEndpoint = new CfnOutput(this, "GatewayUrl", new CfnOutputProps
-            {
-                Value = gateway.Url
-            });
+
 
             //new LambdaRestApi(this, "Endpoint", new LambdaRestApiProps
             //{

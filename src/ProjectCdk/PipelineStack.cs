@@ -3,6 +3,7 @@ using Amazon.CDK.AWS.CodeCommit;
 using Amazon.CDK.AWS.CodePipeline;
 using Amazon.CDK.AWS.CodePipeline.Actions;
 using Amazon.CDK.Pipelines;
+using System.Collections.Generic;
 
 namespace ProjectCdk
 {
@@ -56,10 +57,31 @@ namespace ProjectCdk
                 })
             });
 
-            //cretae an instance of the stage 
+            //create an instance of the stage 
             var deploy = new ProjectPipelineStage(this, "Deploy");
             //then add that stage to our pipeline
             var deployStage = pipeline.AddApplicationStage(deploy);
+
+            deployStage.AddActions(new ShellScriptAction(new ShellScriptActionProps
+            {
+                ActionName = "TestViewerEndpoint",
+                UseOutputs = new Dictionary<string, StackOutput> {
+                    { "ENDPOINT_URL", pipeline.StackOutput(deploy.HCViewerUrl) }
+                },
+                Commands = new string[] { "curl -Ssf $ENDPOINT_URL" }
+            }));
+            deployStage.AddActions(new ShellScriptAction(new ShellScriptActionProps
+            {
+                ActionName = "TestAPIGatewayEndpoint",
+                UseOutputs = new Dictionary<string, StackOutput> {
+                    { "ENDPOINT_URL", pipeline.StackOutput(deploy.HCEndpoint)  }
+                },
+                Commands = new string[] {
+                    "curl -Ssf $ENDPOINT_URL/",
+                    "curl -Ssf $ENDPOINT_URL/hello",
+                    "curl -Ssf $ENDPOINT_URL/test"
+                }
+            }));
         }
     }
 }

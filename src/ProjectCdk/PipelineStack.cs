@@ -56,9 +56,9 @@ namespace ProjectCdk
                 })
             });
 
-            //add stage to the pipeline
+            //cretae an instance of the stage 
             var deploy = new ProjectPipelineStage(this, "Deploy");
-            //add that stage to our pipeline
+            //then add that stage to our pipeline
             var deployStage = pipeline.AddApplicationStage(deploy);
         }
     }

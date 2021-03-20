@@ -7,6 +7,8 @@ namespace ProjectCdk
 {
     public class ProjectCdkStack : Stack
     {
+        public readonly CfnOutput HCViewerUrl;
+        public readonly CfnOutput HCEndpoint;
         internal ProjectCdkStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
             // Defines a new lambda resource
@@ -22,17 +24,39 @@ namespace ProjectCdk
                 Downstream = hello
             });
 
-            new LambdaRestApi(this, "Endpoint", new LambdaRestApiProps
+            //expose endpoints as properties of our stack
+            var gateway = new LambdaRestApi(this, "Endpoint", new LambdaRestApiProps
             {
                 Handler = helloWithCounter.Handler
             });
-
             // Defines a new TableViewer resource
-            new TableViewer(this, "ViewerHitCount", new TableViewerProps
+            var tv = new TableViewer(this, "ViewerHitCount", new TableViewerProps
             {
                 Title = "Hello Hits",
                 Table = helloWithCounter.MyTable
             });
+
+            this.HCViewerUrl = new CfnOutput(this, "TableViewerUrl", new CfnOutputProps
+            {
+                Value = gateway.Url
+            });
+
+            this.HCEndpoint = new CfnOutput(this, "GatewayUrl", new CfnOutputProps
+            {
+                Value = gateway.Url
+            });
+
+            //new LambdaRestApi(this, "Endpoint", new LambdaRestApiProps
+            //{
+            //    Handler = helloWithCounter.Handler
+            //});
+
+            // Defines a new TableViewer resource
+            //new TableViewer(this, "ViewerHitCount", new TableViewerProps
+            //{
+            //    Title = "Hello Hits",
+            //    Table = helloWithCounter.MyTable
+            //});
         }
     }
 }

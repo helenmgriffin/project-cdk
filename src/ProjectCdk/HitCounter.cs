@@ -43,7 +43,7 @@ namespace ProjectCdk
             table.GrantReadWriteData(Handler);
 
             // Grant the lambda role invoke permissions to the downstream function
-            props.Downstream.GrantInvoke(Handler);
+            props.Downstream.GrantInvoke(Handler); 
         }
     }
 }

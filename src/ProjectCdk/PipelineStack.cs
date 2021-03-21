@@ -28,15 +28,26 @@ namespace ProjectCdk
             var pipeline = new CdkPipeline(this, "Pipeline", new CdkPipelineProps
             {
                 PipelineName = "ProjectPipeline",
-                CloudAssemblyArtifact = cloudAssemblyArtifact, 
+                CloudAssemblyArtifact = cloudAssemblyArtifact,
+
+                SourceAction = new GitHubSourceAction(new GitHubSourceActionProps
+                {
+                    ActionName = "GitHub",
+                    Output = sourceArtifact,
+                    OauthToken = SecretValue.SecretsManager("GITHUB_TOKEN_NAME"),
+                    // Replace these with your actual GitHub project name
+                    Owner = "OWNER",
+                    Repo = "REPO",
+                    Branch = "main"
+                }),
 
                 // Generates the source artifact from the repo we created in the last step
-                SourceAction = new CodeCommitSourceAction(new CodeCommitSourceActionProps
-                {
-                    ActionName = "CodeCommit", // Any Git-based source control
-                    Output = sourceArtifact, // Indicates where the artifact is stored
-                    Repository = repo // Designates the repo to draw code from
-                }),
+                //SourceAction = new CodeCommitSourceAction(new CodeCommitSourceActionProps
+                //{
+                //    ActionName = "CodeCommit", // Any Git-based source control
+                //    Output = sourceArtifact, // Indicates where the artifact is stored
+                //    Repository = repo // Designates the repo to draw code from
+                //}),
 
                 // Builds our source code outlined above into a could assembly artifact
                 SynthAction = SimpleSynthAction.StandardNpmSynth(new StandardNpmSynthOptions
@@ -44,16 +55,8 @@ namespace ProjectCdk
                     SourceArtifact = sourceArtifact,  // Where to get source code to build
                     CloudAssemblyArtifact = cloudAssemblyArtifact,  // Where to place built source
 
-                    //InstallCommands = new[]
-                    //{
-                    //    "npm install -g aws-cdk",   
-                    //    "sudo apt-get install -y dotnet-sdk-3.1"
-                    //},
-                    //InstallCommand = "npm install -g aws-cdk",
                     InstallCommand = "npm install -g aws-cdk && wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb && apt-get update && apt-get install -y apt-transport-https && apt-get update && apt-get install -y dotnet-sdk-3.1",
                     BuildCommand = "dotnet build src", // Language-specific build cmd
-                    //Subdirectory = "ProjectRepo/src/ProjectCdk.sln"
-
                 })
             });
 

@@ -35,7 +35,7 @@ namespace ProjectCdk
                     ActionName = "GitHub",
                     Output = sourceArtifact,
                     OauthToken = SecretValue.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
-                    //Trigger = GitHubTrigger.NONE,
+                    Trigger = GitHubTrigger.WEBHOOK,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",
                     Repo = "project-cdk",

@@ -21,7 +21,7 @@ namespace ProjectCdk
             var sourceArtifact = new Artifact_();
             // Defines the artifact representing the cloud assembly 
             // (cloudformation template + all other assets)
-            var cloudAssemblyArtifact = new Artifact_(); 
+            var cloudAssemblyArtifact = new Artifact_();
 
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline
@@ -34,11 +34,12 @@ namespace ProjectCdk
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    OauthToken = SecretValue.SecretsManager("GITHUB_TOKEN_NAME"),
+                    OauthToken = SecretValue.SsmSecure("GitHubPersonalAccessToken", "1"), 
+                    //Trigger = GitHubTrigger.POLL,
                     // Replace these with your actual GitHub project name
-                    Owner = "OWNER",
-                    Repo = "REPO",
-                    Branch = "main"
+                    Owner = "helenmgriffin",
+                    Repo = "project-cdk",
+                    Branch = "master"
                 }),
 
                 // Generates the source artifact from the repo we created in the last step

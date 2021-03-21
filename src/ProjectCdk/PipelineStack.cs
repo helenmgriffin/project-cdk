@@ -34,7 +34,7 @@ namespace ProjectCdk
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    OauthToken = SecretValue.SsmSecure("GitHubPersonalAccessToken", "1"), 
+                    OauthToken = SecretValue.SecretsManager("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
                     //Trigger = GitHubTrigger.POLL,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",

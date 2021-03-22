@@ -26,10 +26,8 @@ namespace ProjectCdk
         /*
         * AWSSDK.SecretsManager version="3.3.0" targetFramework="net45"
         */
-        public static string GetSecret()
+        public static string GetSecret(string secretName, string region)
         {
-            string secretName = "GitHubPersonalAccessToken";
-            string region = "eu-west-1";
             string secret = "";
 
             MemoryStream memoryStream = new MemoryStream();
@@ -54,37 +52,37 @@ namespace ProjectCdk
             {
                 // Secrets Manager can't decrypt the protected secret text using the provided KMS key.
                 // Deal with the exception here, and/or rethrow at your discretion.
-                throw;
+                throw e;
             }
             catch (InternalServiceErrorException e)
             {
                 // An error occurred on the server side.
                 // Deal with the exception here, and/or rethrow at your discretion.
-                throw;
+                throw e;
             }
             catch (InvalidParameterException e)
             {
                 // You provided an invalid value for a parameter.
                 // Deal with the exception here, and/or rethrow at your discretion
-                throw;
+                throw e;
             }
             catch (InvalidRequestException e)
             {
                 // You provided a parameter value that is not valid for the current state of the resource.
                 // Deal with the exception here, and/or rethrow at your discretion.
-                throw;
+                throw e;
             }
             catch (ResourceNotFoundException e)
             {
                 // We can't find the resource that you asked for.
                 // Deal with the exception here, and/or rethrow at your discretion.
-                throw;
+                throw e;
             }
             catch (System.AggregateException ae)
             {
                 // More than one of the above exceptions were triggered.
                 // Deal with the exception here, and/or rethrow at your discretion.
-                throw;
+                throw ae;
             }
 
             // Decrypts secret using the associated KMS CMK.

@@ -12,10 +12,10 @@ namespace ProjectCdk
         public ProjectPipelineStack(Construct parent, string id, IStackProps props = null) : base(parent, id, props)
         {
             // Creates a CodeCommit repository called 'ProjectRepo'
-            var repo = new Repository(this, "ProjectRepo", new RepositoryProps
-            {
-                RepositoryName = "ProjectRepo"
-            });
+            //var repo = new Repository(this, "ProjectRepo", new RepositoryProps
+            //{
+            //    RepositoryName = "project-cdk"
+            //});
 
             // Defines the artifact representing the sourcecode
             var sourceArtifact = new Artifact_();
@@ -34,7 +34,7 @@ namespace ProjectCdk
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    OauthToken = SecretValue.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
+                    OauthToken = SecretValue.SecretsManager("GitHubPersonalAccessToken"), //.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
                     Trigger = GitHubTrigger.WEBHOOK,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",
@@ -59,7 +59,7 @@ namespace ProjectCdk
                     InstallCommand = "npm install -g aws-cdk && wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb && apt-get update && apt-get install -y apt-transport-https && apt-get update && apt-get install -y dotnet-sdk-3.1",
                     BuildCommand = "dotnet build src", // Language-specific build cmd
                 })
-            });
+            });;
 
             //create an instance of the stage 
             var deploy = new ProjectPipelineStage(this, "Deploy");

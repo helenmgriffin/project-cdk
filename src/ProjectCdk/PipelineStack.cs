@@ -25,12 +25,12 @@ namespace ProjectCdk
             var cloudAssemblyArtifact = new Artifact_();
 
 
-            string secretName = "GitHubPersonalAccessToken";
+            string secretName = "GitHubPersonalAccessToken2";
             string region = "eu-west-1";
 
             var secretString = Helper.GetSecret(secretName, region);
             var secretObjects = JObject.Parse(secretString); // parse as array  
-            var secret = secretObjects["GitHubPersonalAccessToken"];
+            var secret = secretObjects["GitHubPersonalAccessToken2"];
 
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline

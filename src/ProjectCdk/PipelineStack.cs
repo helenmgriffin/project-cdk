@@ -34,7 +34,7 @@ namespace ProjectCdk
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    OauthToken = SecretValue.SecretsManager("arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-MSZRLO", new SecretsManagerSecretOptions
+                    OauthToken = SecretValue.SecretsManager("GitHubPersonalAccessToken", new SecretsManagerSecretOptions
                     {
                         JsonField = "GitHubPersonalAccessToken"
                     }), //.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 

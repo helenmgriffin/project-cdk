@@ -47,7 +47,7 @@ namespace ProjectCdk
                 //    ActionName = "CodeCommit", // Any Git-based source control
                 //    Output = sourceArtifact, // Indicates where the artifact is stored
                 //    Repository = repo // Designates the repo to draw code from
-                //}),
+                //}), 
 
                 // Builds our source code outlined above into a could assembly artifact
                 SynthAction = SimpleSynthAction.StandardNpmSynth(new StandardNpmSynthOptions

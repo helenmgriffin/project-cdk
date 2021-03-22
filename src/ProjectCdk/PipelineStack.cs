@@ -3,7 +3,6 @@ using Amazon.CDK.AWS.CodeCommit;
 using Amazon.CDK.AWS.CodePipeline;
 using Amazon.CDK.AWS.CodePipeline.Actions;
 using Amazon.CDK.Pipelines;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace ProjectCdk
@@ -23,15 +22,6 @@ namespace ProjectCdk
             // Defines the artifact representing the cloud assembly 
             // (cloudformation template + all other assets)
             var cloudAssemblyArtifact = new Artifact_();
-
-
-            string secretName = "GitHubPersonalAccessToken2";
-            string region = "eu-west-1";
-
-            var secretString = Helper.GetSecret(secretName, region);
-            var secretObjects = JObject.Parse(secretString); // parse as array  
-            var secret = secretObjects["GitHubPersonalAccessToken2"];
-
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline
             var pipeline = new CdkPipeline(this, "Pipeline", new CdkPipelineProps
@@ -43,7 +33,7 @@ namespace ProjectCdk
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    OauthToken = SecretValue.PlainText(secret.ToString()),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
+                    OauthToken = SecretValue.PlainText("a4d9a00381b1bbb5c24873a61f3bfeff4ff1d67b"),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
                     Trigger = GitHubTrigger.WEBHOOK,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",

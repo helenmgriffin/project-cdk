@@ -46,20 +46,6 @@ namespace ProjectCdk
             {
                 Value = tv.Endpoint
             });
-
-
-
-            //new LambdaRestApi(this, "Endpoint", new LambdaRestApiProps
-            //{
-            //    Handler = helloWithCounter.Handler
-            //});
-
-            // Defines a new TableViewer resource
-            //new TableViewer(this, "ViewerHitCount", new TableViewerProps
-            //{
-            //    Title = "Hello Hits",
-            //    Table = helloWithCounter.MyTable
-            //});
         }
     }
 }

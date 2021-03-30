@@ -37,7 +37,7 @@ namespace ProjectCdk
                 PartitionKey = new Attribute
                 {
                     Name = "TicketID",
-                    Type = AttributeType.NUMBER
+                    Type = AttributeType.STRING
                 },
                 BillingMode = BillingMode.PAY_PER_REQUEST,
                 RemovalPolicy = RemovalPolicy.DESTROY

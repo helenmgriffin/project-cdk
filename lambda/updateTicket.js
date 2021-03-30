@@ -3,9 +3,9 @@ var dynamo = new doc.DynamoDB();
 
 exports.handler = async function (event, context) {
     var getParams = {
-        TableName: 'Tickets',
+        TableName: process.env.HITS_TABLE_NAME,
         Key: {
-            "TicketID": { "N": event.ticketID }
+            "TicketID": { "S": event.ticketID }
         },
         UpdateExpression: "set Summary = :val1, Description=:val2",
         "ExpressionAttributeValues": {

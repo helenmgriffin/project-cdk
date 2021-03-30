@@ -7,7 +7,7 @@ exports.handler = async function (event, context) {
         TableName: process.env.HITS_TABLE_NAME,
         Item: {
             "TicketID": {
-                N: event.ticketID
+                S: event.ticketID
             },
             "Summary": {
                 S: event.summary

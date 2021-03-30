@@ -5,11 +5,11 @@ exports.handler = async function (event, context) {
     var condition = {};
     condition["TicketID"] = {
         ComparisonOperator: 'EQ',
-        AttributeValueList: [{ N: event.ticketID }]
+        AttributeValueList: [{ S: event.ticketID }]
     }
 
     var getParams = {
-        TableName: 'Tickets',
+        TableName: process.env.HITS_TABLE_NAME,
 /*        ProjectionExpression: 'TicketID,Summary',*/
         KeyConditions: condition
     };

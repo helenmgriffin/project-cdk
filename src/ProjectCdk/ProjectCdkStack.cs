@@ -1,7 +1,7 @@
 using Amazon.CDK;
 using Amazon.CDK.AWS.Lambda;
 using Amazon.CDK.AWS.APIGateway;
-using Eladb.DynamoTableViewer;
+//using Eladb.DynamoTableViewer;
 
 namespace ProjectCdk
 {
@@ -36,16 +36,16 @@ namespace ProjectCdk
             });
 
             // Defines a new TableViewer resource
-            var tv = new TableViewer(this, "ViewerHitCount", new TableViewerProps
-            {
-                Title = "Hello Hits",
-                Table = helloWithCounter.MyTable
-            });
+            //var tv = new TableViewer(this, "ViewerHitCount", new TableViewerProps
+            //{
+            //    Title = "Hello Hits",
+            //    Table = helloWithCounter.MyTable
+            //});
 
-            this.HCViewerUrl = new CfnOutput(this, "TableViewerUrl", new CfnOutputProps
-            {
-                Value = tv.Endpoint
-            });
+            //this.HCViewerUrl = new CfnOutput(this, "TableViewerUrl", new CfnOutputProps
+            //{
+            //    Value = tv.Endpoint
+            //});
         }
     }
 }

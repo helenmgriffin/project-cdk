@@ -43,34 +43,45 @@ namespace ProjectCdk
 
                     InstallCommand = "npm install -g aws-cdk && wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb && apt-get update && apt-get install -y apt-transport-https && apt-get update && apt-get install -y dotnet-sdk-3.1",
                     BuildCommand = "dotnet build src", // Language-specific build cmd
-                })
+                }),
+
             }); 
 
             //create an instance of the stage 
             var deploy = new ProjectPipelineStage(this, "Deploy");
             //then add that stage to our pipeline
-            var deployStage = pipeline.AddApplicationStage(deploy);
+            //var deployStage = pipeline.AddApplicationStage(deploy);
+            var deployStage = pipeline.AddStage("Deploy");
 
-            deployStage.AddActions(new ShellScriptAction(new ShellScriptActionProps
+            deployStage.AddActions(new ElasticBeanStalkDeployAction(new ElasticBeanStalkDeployActionProps()
             {
-                ActionName = "TestViewerEndpoint",
-                UseOutputs = new Dictionary<string, StackOutput> {
-                    { "ENDPOINT_URL", pipeline.StackOutput(deploy.HCViewerUrl) }
-                },
-                Commands = new string[] { "curl -Ssf $ENDPOINT_URL" }
+                Input = new Artifact_("SourceArtifact"),
+                ActionName = "Deploy",
+                ApplicationName = "CollegeProject",
+                EnvironmentName = "CollegeProject-MVCEBEnvironment"
             }));
-            deployStage.AddActions(new ShellScriptAction(new ShellScriptActionProps
-            {
-                ActionName = "TestAPIGatewayEndpoint",
-                UseOutputs = new Dictionary<string, StackOutput> {
-                    { "ENDPOINT_URL", pipeline.StackOutput(deploy.HCEndpoint)  }
-                },
-                Commands = new string[] {
-                    "curl -Ssf $ENDPOINT_URL/",
-                    "curl -Ssf $ENDPOINT_URL/hello",
-                    "curl -Ssf $ENDPOINT_URL/test"
-                }
-            }));
+
+            //deployStage.AddActions(new ShellScriptAction(new ShellScriptActionProps
+            //{
+            //    ActionName = "TestViewerEndpoint",
+            //    UseOutputs = new Dictionary<string, StackOutput> {
+            //        { "ENDPOINT_URL", pipeline.StackOutput(deploy.HCViewerUrl) }
+            //    },
+            //    Commands = new string[] { "curl -Ssf $ENDPOINT_URL" }
+            //}));
+
+            //deployStage.AddActions(new ShellScriptAction(new ShellScriptActionProps
+            //{
+            //    ActionName = "TestAPIGatewayEndpoint",
+            //    UseOutputs = new Dictionary<string, StackOutput> {
+            //        { "ENDPOINT_URL", pipeline.StackOutput(deploy.HCEndpoint)  }
+            //    },
+            //    Commands = new string[] {
+            //        "curl -Ssf $ENDPOINT_URL/",
+            //        "curl -Ssf $ENDPOINT_URL/hello",
+            //        "curl -Ssf $ENDPOINT_URL/test"
+            //    }
+            //}));
         }
     }
 }

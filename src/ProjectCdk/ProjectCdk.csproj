@@ -8,7 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DatabaseCdkStack.cs" />
+    <Compile Remove="handler\PutHandler.cs" />
     <Compile Remove="Helper.cs" />
+    <Compile Remove="HitCounter.cs" />
+    <Compile Remove="ProjectCdkStack.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,17 +25,21 @@
     <PackageReference Include="Amazon.CDK.AWS.DynamoDB" Version="1.94.1" />
     <PackageReference Include="Amazon.CDK.AWS.IAM" Version="1.94.1" />
     <PackageReference Include="Amazon.CDK.AWS.Lambda" Version="1.94.1" />
+    <PackageReference Include="Amazon.CDK.AWS.RDS" Version="1.94.1" />
     <PackageReference Include="Amazon.CDK.AWS.SNS" Version="1.94.1" />
     <PackageReference Include="Amazon.CDK.AWS.SNS.Subscriptions" Version="1.94.1" />
     <PackageReference Include="Amazon.CDK.AWS.SQS" Version="1.94.1" />
     <PackageReference Include="Amazon.CDK.Pipelines" Version="1.94.1" />
     <PackageReference Include="Amazon.JSII.Runtime" Version="1.25.0" />
-    <PackageReference Include="AWSSDK.SecretsManager" Version="3.5.1.5" />
-    <PackageReference Include="Eladb.DynamoTableViewer" Version="3.1.2" />
+    <PackageReference Include="Amazon.Lambda.Core" Version="1.2.0" />
 
     <!-- jsii Roslyn analyzers (un-comment to obtain compile-time checks for missing required props
     <PackageReference Include="Amazon.Jsii.Analyzers" Version="*" PrivateAssets="all" />
     -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="handler\" />
   </ItemGroup>
 
 </Project>

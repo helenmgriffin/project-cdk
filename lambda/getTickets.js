@@ -3,7 +3,7 @@ var dynamo = new doc.DynamoDB();
 
 exports.handler = async function (event, context) {
     var getParams = {
-        TableName: process.env.HITS_TABLE_NAME,
+        TableName: process.env.TABLE_NAME,
     };
 
     await dynamo.scan(getParams, function (err, data) {

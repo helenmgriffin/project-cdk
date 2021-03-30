@@ -9,7 +9,7 @@ exports.handler = async function (event, context) {
     }
 
     var getParams = {
-        TableName: process.env.HITS_TABLE_NAME,
+        TableName: process.env.TABLE_NAME,
 /*        ProjectionExpression: 'TicketID,Summary',*/
         KeyConditions: condition
     };

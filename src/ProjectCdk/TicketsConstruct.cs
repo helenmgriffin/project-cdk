@@ -36,7 +36,7 @@ namespace ProjectCdk
                 TableName = "Tickets",
                 PartitionKey = new Attribute
                 {
-                    Name = "TicketID",
+                    Name = "TicketGUID",
                     Type = AttributeType.STRING
                 },
                 BillingMode = BillingMode.PAY_PER_REQUEST,

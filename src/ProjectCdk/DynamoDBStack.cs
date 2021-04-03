@@ -27,8 +27,12 @@ namespace ProjectCdk
             //expose endpoints as properties of our stack
             var updateTicketGateway = new LambdaRestApi(this, "UpdateTicketGateway", new LambdaRestApiProps
             {
-                Handler = ticketsConstruct.UpdateHandler
-            });
+                Handler = ticketsConstruct.UpdateHandler,
+                DefaultCorsPreflightOptions = new CorsOptions {  AllowOrigins = Cors.ALL_ORIGINS, AllowMethods = new string[]{ "POST" } }
+            });;
+
+            //var items1 = updateTicketGateway.Root.AddResource("items");
+            //items1.AddMethod("POST", null, new MethodOptions { ApiKeyRequired = true});// POST /items
 
             updateEndpoint = new CfnOutput(this, "UpdateTicketGatewayUrl", new CfnOutputProps
             {
@@ -38,20 +42,27 @@ namespace ProjectCdk
             //expose endpoints as properties of our stack
             var getTicketsGateway = new LambdaRestApi(this, "GetTicketsGateway", new LambdaRestApiProps
             {
-                Handler = ticketsConstruct.GetHandler
+                Handler = ticketsConstruct.GetHandler,
+                DefaultCorsPreflightOptions = new CorsOptions { AllowOrigins = Cors.ALL_ORIGINS, AllowMethods = new string[] { "GET" } }
             });
+
+            //var items2 = getTicketsGateway.Root.AddResource("items");
+            //items2.AddMethod("GET");// GET /items
 
             getEndpoint = new CfnOutput(this, "GetTicketsGatewayUrl", new CfnOutputProps
             {
                 Value = getTicketsGateway.Url
             });
 
-
             //expose endpoints as properties of our stack
             var getTicketByIDGateway = new LambdaRestApi(this, "GetTicketByIDGateway", new LambdaRestApiProps
             {
-                Handler = ticketsConstruct.GetByIDHandler
+                Handler = ticketsConstruct.GetByIDHandler,
+                DefaultCorsPreflightOptions = new CorsOptions { AllowOrigins = Cors.ALL_ORIGINS, AllowMethods = new string[] { "GET" } }
             });
+
+            //var items3 = getTicketByIDGateway.Root.AddResource("items");
+            //items3.AddMethod("GET");// GET /items
 
             getByIDEndpoint = new CfnOutput(this, "GetTicketByIDGatewayUrl", new CfnOutputProps
             {
@@ -61,8 +72,12 @@ namespace ProjectCdk
             //expose endpoints as properties of our stack
             var putGateway = new LambdaRestApi(this, "PutTicketGateway", new LambdaRestApiProps
             {
-                Handler = ticketsConstruct.PutHandler
+                Handler = ticketsConstruct.PutHandler,
+                DefaultCorsPreflightOptions = new CorsOptions { AllowOrigins = Cors.ALL_ORIGINS, AllowMethods = new string[] { "PUT" } }
             });
+
+            //var items4 = putGateway.Root.AddResource("items");
+            //items4.AddMethod("Put");// PUT /items
 
             putEndpoint = new CfnOutput(this, "PutTicketGatewayUrl", new CfnOutputProps
             {
@@ -86,23 +101,7 @@ namespace ProjectCdk
 
             
 
-            //// Defines a new lambda resource
-            //var getTickets = new Function(this, "GetTickets", new FunctionProps
-            //{
-            //    Runtime = Runtime.NODEJS_12_X,// execution environment
-            //    Code = Code.FromAsset("lambda"),// Code loaded from the "lambda" directory
-            //    Handler = "getTickets.handler"// file is "getTickets", function is "handler"
-            //});
 
-            /*  [TicketNumber]    INT              NOT NULL,
-                [Summary]         VARCHAR (50)     NOT NULL,
-                [Description]     VARCHAR (1000)   NOT NULL,
-                [CreationDate]    DATETIME         NOT NULL,
-                [Creator]         NCHAR (25)       NOT NULL,
-                [ClosedDate]      DATETIME         NULL,
-                [TicketPriority]  INT              NOT NULL,
-                [ClosingComments] VARCHAR (1000)   NULL,
-            */
 
         }
     }

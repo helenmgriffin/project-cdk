@@ -8,18 +8,14 @@ namespace ProjectCdk
 {
     public class DynamoDBStack: Stack
     {
-        public readonly CfnOutput ticketsTableArn;
-        public readonly CfnOutput updateEndpoint;
-        public readonly CfnOutput getEndpoint;
-        public readonly CfnOutput getByIDEndpoint;
-        public readonly CfnOutput putEndpoint;
+        public DynamboDBProps DynamoStackProps = new DynamboDBProps();
 
         internal DynamoDBStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
 
             var ticketsConstruct = new TicketsConstruct(this, "TicketsConstruct", new TicketsConstructProps {});
 
-            ticketsTableArn = new CfnOutput(this, "DynamoDBTicketsTableArn", new CfnOutputProps
+            var ticketsTableArn = new CfnOutput(this, "DynamoDBTicketsTableArn", new CfnOutputProps
             {
                 Value = ticketsConstruct.TicketsTable.TableArn
             });
@@ -34,7 +30,7 @@ namespace ProjectCdk
             //var items1 = updateTicketGateway.Root.AddResource("items");
             //items1.AddMethod("POST", null, new MethodOptions { ApiKeyRequired = true});// POST /items
 
-            updateEndpoint = new CfnOutput(this, "UpdateTicketGatewayUrl", new CfnOutputProps
+            var updateEndpoint = new CfnOutput(this, "UpdateTicketGatewayUrl", new CfnOutputProps
             {
                 Value = updateTicketGateway.Url
             });
@@ -49,7 +45,7 @@ namespace ProjectCdk
             //var items2 = getTicketsGateway.Root.AddResource("items");
             //items2.AddMethod("GET");// GET /items
 
-            getEndpoint = new CfnOutput(this, "GetTicketsGatewayUrl", new CfnOutputProps
+            var getEndpoint = new CfnOutput(this, "GetTicketsGatewayUrl", new CfnOutputProps
             {
                 Value = getTicketsGateway.Url
             });
@@ -64,7 +60,7 @@ namespace ProjectCdk
             //var items3 = getTicketByIDGateway.Root.AddResource("items");
             //items3.AddMethod("GET");// GET /items
 
-            getByIDEndpoint = new CfnOutput(this, "GetTicketByIDGatewayUrl", new CfnOutputProps
+            var getByIDEndpoint = new CfnOutput(this, "GetTicketByIDGatewayUrl", new CfnOutputProps
             {
                 Value = getTicketByIDGateway.Url
             });
@@ -79,7 +75,7 @@ namespace ProjectCdk
             //var items4 = putGateway.Root.AddResource("items");
             //items4.AddMethod("Put");// PUT /items
 
-            putEndpoint = new CfnOutput(this, "PutTicketGatewayUrl", new CfnOutputProps
+            var putEndpoint = new CfnOutput(this, "PutTicketGatewayUrl", new CfnOutputProps
             {
                 Value = putGateway.Url
             });
@@ -99,9 +95,11 @@ namespace ProjectCdk
             //});
             //table.GrantReadWriteData(role);
 
-            
 
-
+            DynamoStackProps.getEndpoint = getEndpoint;
+            DynamoStackProps.getByIDEndpoint = getByIDEndpoint;
+            DynamoStackProps.putEndpoint = putEndpoint;
+            DynamoStackProps.updateEndpoint = updateEndpoint;
 
         }
     }

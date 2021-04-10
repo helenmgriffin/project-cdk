@@ -3,7 +3,7 @@ using Amazon.CDK.AWS.EC2;
 using Amazon.CDK.AWS.IAM;
 using Amazon.CDK.AWS.RDS;
 using Amazon.CDK.AWS.SecretsManager;
-using Talnakh.SqlServerSeeder;
+//using Talnakh.SqlServerSeeder;
 
 namespace ProjectCdk
 {
@@ -64,14 +64,14 @@ namespace ProjectCdk
                 
             });
 
-            var seeder = new SqlServerSeeder(this, "SqlSeeder", new SqlServerSeederProps
-            {
-                Vpc = vpc,
-                Database = sqlInstance,
-                Port = 1433,
-                CreateScriptPath = "./SQL/v1.0.0.sql",//script to be executed on resource creation
-                DeleteScriptPath = "./SQL/cleanup.sql"
-            });
+            //var seeder = new SqlServerSeeder(this, "SqlSeeder", new SqlServerSeederProps
+            //{
+            //    Vpc = vpc,
+            //    Database = sqlInstance,
+            //    Port = 1433,
+            //    CreateScriptPath = "./SQL/v1.0.0.sql",//script to be executed on resource creation
+            //    DeleteScriptPath = "./SQL/cleanup.sql"
+            //});
             //var role = new Role(this, "DBRole", new RoleProps
             //{
             //    AssumedBy = new AccountPrincipal(this.Account)

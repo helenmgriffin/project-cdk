@@ -16,6 +16,8 @@ namespace ProjectCdk
             // Defines the artifact representing the cloud assembly 
             // (cloudformation template + all other assets)
             var cloudAssemblyArtifact = new Artifact_();
+
+            SecretValue oauth = SecretValue.SecretsManager("arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at");
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline
             var pipeline = new CdkPipeline(this, "Pipeline", new CdkPipelineProps
@@ -27,7 +29,7 @@ namespace ProjectCdk
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    //OauthToken = SecretValue.PlainText("93e0ce2224fc2c0d1d07da23b77d4edba2bb68dc"),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
+                    OauthToken = oauth,//SecretValue.PlainText("93e0ce2224fc2c0d1d07da23b77d4edba2bb68dc"),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
                     Trigger = GitHubTrigger.WEBHOOK,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",
@@ -35,7 +37,7 @@ namespace ProjectCdk
                     Branch = "master"
                 }),
 
-                // Builds our source code outlined above into a could assembly artifact
+                // Builds our source code outlined above into a cloud assembly artifact
                 SynthAction = SimpleSynthAction.StandardNpmSynth(new StandardNpmSynthOptions
                 {
                     SourceArtifact = sourceArtifact,  // Where to get source code to build
@@ -45,7 +47,7 @@ namespace ProjectCdk
                     BuildCommand = "dotnet build src", // Language-specific build cmd
                 }),
 
-            }); 
+            }) ; 
 
             //create an instance of the stage 
             var deploy = new ProjectPipelineStage(this, "Deploy");
@@ -53,13 +55,13 @@ namespace ProjectCdk
             //var deployStage = pipeline.AddApplicationStage(deploy);
             var deployStage = pipeline.AddStage("Deploy");
 
-            deployStage.AddActions(new ElasticBeanStalkDeployAction(new ElasticBeanStalkDeployActionProps()
-            {
-                Input = new Artifact_("SourceArtifact"),
-                ActionName = "Deploy",
-                ApplicationName = "CollegeProject",
-                EnvironmentName = "CollegeProject-MVCEBEnvironment"
-            }));
+            //deployStage.AddActions(new ElasticBeanStalkDeployAction(new ElasticBeanStalkDeployActionProps()
+            //{
+            //    Input = new Artifact_("SourceArtifact"),
+            //    ActionName = "Deploy",
+            //    ApplicationName = "CollegeProject",
+            //    EnvironmentName = "CollegeProject-MVCEBEnvironment"
+            //}));
 
             //deployStage.AddActions(new ShellScriptAction(new ShellScriptActionProps
             //{

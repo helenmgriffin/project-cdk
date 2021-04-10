@@ -22,6 +22,7 @@ namespace ProjectCdk
         {
             this.ActionProperties = new ActionProperties()
             {
+                ActionName = "Deploy",
                 Provider = "ElasticBeanstalk",
                 Category = ActionCategory.DEPLOY,
                 ArtifactBounds = new ActionArtifactBounds()

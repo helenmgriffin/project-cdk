@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectCdk", "ProjectCdk\ProjectCdk.csproj", "{503EAC82-8FF2-409C-8E3B-51ABCEF34116}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectCdk", "ProjectCdk\ProjectCdk.csproj", "{503EAC82-8FF2-409C-8E3B-51ABCEF34116}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,9 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{503EAC82-8FF2-409C-8E3B-51ABCEF34116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +27,11 @@ Global
 		{503EAC82-8FF2-409C-8E3B-51ABCEF34116}.Release|x64.Build.0 = Release|Any CPU
 		{503EAC82-8FF2-409C-8E3B-51ABCEF34116}.Release|x86.ActiveCfg = Release|Any CPU
 		{503EAC82-8FF2-409C-8E3B-51ABCEF34116}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE74ADE9-3695-4278-95C4-C8140E066523}
 	EndGlobalSection
 EndGlobal

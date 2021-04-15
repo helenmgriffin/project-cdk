@@ -32,7 +32,10 @@ namespace ProjectCdk
                 PipelineName = "ProjectPipeline",
                 CloudAssemblyArtifact = cloudAssemblyArtifact,
 
-                SourceAction = new GitHubSourceAction(new GitHubSourceActionProps
+                //SourceAction = new BitBucketSourceAction(new BitBucketSourceActionProps
+                //{
+                //}
+                    SourceAction = new GitHubSourceAction(new GitHubSourceActionProps
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
@@ -42,9 +45,9 @@ namespace ProjectCdk
                     Owner = "helenmgriffin",
                     Repo = "project-cdk",
                     Branch = "master",
-                    Trigger = GitHubTrigger.POLL
+                    Trigger = GitHubTrigger.WEBHOOK
                 }),
-
+                    
                 // Builds our source code outlined above into a cloud assembly artifact
                 SynthAction = SimpleSynthAction.StandardNpmSynth(new StandardNpmSynthOptions
                 {
@@ -55,8 +58,8 @@ namespace ProjectCdk
                     BuildCommand = "dotnet build src", // Language-specific build cmd
                 }),
 
-            }) ; 
-
+            }) ;
+ 
             //create an instance of the stage 
             //var deploy = new ProjectPipelineStage(this, "Deploy");
             //then add that stage to our pipeline

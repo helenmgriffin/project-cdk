@@ -16,7 +16,7 @@ namespace ProjectCdk
     {
         public readonly CfnOutput externalDNS;
 
-        internal HelpDeskFargateStack(Construct scope, string id, CommonProps props = null) : base(scope, id, props)
+        internal HelpDeskFargateStack(Construct scope, string id, StackProps props = null) : base(scope, id, props)
         {
             //Existing VPC
             IVpc vpc = Vpc.FromLookup(this, "VPC", new VpcLookupOptions

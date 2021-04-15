@@ -19,12 +19,16 @@ namespace ProjectCdk
         internal HelpDeskFargateStack(Construct scope, string id, StackProps props = null) : base(scope, id, props)
         {
             //Existing VPC
-            IVpc vpc = Vpc.FromLookup(this, "VPC", new VpcLookupOptions
-            {
-                // This imports the default VPC but you can also
-                // specify a 'vpcName' or 'tags'.
-                IsDefault = true,
-            });
+            //IVpc vpc = Vpc.FromLookup(this, "VPC", new VpcLookupOptions
+            //{
+            //    // This imports the default VPC but you can also
+            //    // specify a 'vpcName' or 'tags'.
+            //    IsDefault = true,
+            //});
+
+            //New VPC
+            IVpc vpc = new Vpc(this, "CollegeProjectVpc", new VpcProps { MaxAzs = 2 });
+
             // Create an ECS cluster
             Cluster cluster = new Cluster(this, "CollegeProjectCluster", new ClusterProps { Vpc = vpc });
             

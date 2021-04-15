@@ -14,12 +14,18 @@ namespace ProjectCdk
         [System.Obsolete]
         public ProjectPipelineStack(Construct parent, string id, IStackProps props = null) : base(parent, id, props)
         {
-            var secret = Secret.FromSecretAttributes(this, "GitHubPersonalAccessToken", new SecretAttributes
+            var token = new CfnParameter(this, "GitHubPersonalAccessToken", new CfnParameterProps
             {
-                SecretArn = "arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at",
-                // If the secret is encrypted using a KMS-hosted CMK, either import or reference that key:
-                EncryptionKey = Key.FromKeyArn(this, "MyImportedKey", "arn:aws:kms:eu-west-1:235629185262:key/2b2ddf9b-2bfb-4d84-984c-36c934cb9d76"),
+                Type = "String",
+                Description = "The GitHub Personal Access Token"
             });
+
+            //var secret = Secret.FromSecretAttributes(this, "GitHubPersonalAccessToken", new SecretAttributes
+            //{
+            //    SecretArn = "arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at",
+            //    // If the secret is encrypted using a KMS-hosted CMK, either import or reference that key:
+            //    EncryptionKey = Key.FromKeyArn(this, "MyImportedKey", "arn:aws:kms:eu-west-1:235629185262:key/2b2ddf9b-2bfb-4d84-984c-36c934cb9d76"),
+            //});
 
             // Defines the artifact representing the sourcecode
             var sourceArtifact = new Artifact_();
@@ -47,7 +53,7 @@ namespace ProjectCdk
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    OauthToken = SecretValue.PlainText("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"),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
+                    OauthToken = SecretValue.PlainText(token.ValueAsString),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
                     //Trigger = GitHubTrigger.WEBHOOK,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",

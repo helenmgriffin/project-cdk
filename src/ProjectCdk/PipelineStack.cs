@@ -35,7 +35,7 @@ namespace ProjectCdk
                     //Trigger = GitHubTrigger.WEBHOOK,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",
-                    Repo = "helenmgriffin/project-cdk",
+                    Repo = "project-cdk",
                     Branch = "master"
                 }),
 

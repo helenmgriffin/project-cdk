@@ -18,7 +18,7 @@ namespace ProjectCdk
             // (cloudformation template + all other assets)
             var cloudAssemblyArtifact = new Artifact_();
 
-            ISecret mySecret = Secret.FromSecretNameV2(this, "GitHubPersonalAccessToken", "arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at");
+            ISecret mySecret = Secret.FromSecretNameV2(this, "GitHubPersonalAccessToken", "GitHubPersonalAccessToken");
             //SecretValue oauth = SecretValue.SecretsManager("arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at");
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline

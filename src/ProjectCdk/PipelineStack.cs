@@ -54,7 +54,7 @@ namespace ProjectCdk
             }) ;
 
             //create an instance of the stage 
-            var deploy = new ProjectPipelineStage(this, "Deploy");
+            var deploy = new ProjectPipelineStage(this, "Deploy", new Amazon.CDK.StageProps { Env = props.Env });
             //then add that stage to our pipeline
             var deployStage = pipeline.AddApplicationStage(deploy);
             //var deployStage = pipeline.AddStage("Deploy");

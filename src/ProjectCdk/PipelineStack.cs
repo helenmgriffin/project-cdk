@@ -19,6 +19,11 @@ namespace ProjectCdk
             var cloudAssemblyArtifact = new Artifact_();
 
             ISecret mySecret = Secret.FromSecretNameV2(this, "GitHubPersonalAccessToken", "GitHubPersonalAccessToken");
+
+            //var putEndpoint = new CfnOutput(this, "secret", new CfnOutputProps
+            //{
+            //    Value = mySecret.SecretValue.ToString()
+            //});;
             //SecretValue oauth = SecretValue.SecretsManager("arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at");
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline
@@ -36,7 +41,8 @@ namespace ProjectCdk
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",
                     Repo = "project-cdk",
-                    Branch = "master"
+                    Branch = "master",
+                    Trigger = GitHubTrigger.POLL
                 }),
 
                 // Builds our source code outlined above into a cloud assembly artifact

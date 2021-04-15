@@ -14,18 +14,6 @@ namespace ProjectCdk
         [System.Obsolete]
         public ProjectPipelineStack(Construct parent, string id, IStackProps props = null) : base(parent, id, props)
         {
-            //var token = new CfnParameter(this, "GitHubPersonalAccessToken", new CfnParameterProps
-            //{
-            //    Type = "String",
-            //    Description = "The GitHub Personal Access Token"
-            //});
-
-            //var secret = Secret.FromSecretAttributes(this, "GitHubPersonalAccessToken", new SecretAttributes
-            //{
-            //    SecretArn = "arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at",
-            //    // If the secret is encrypted using a KMS-hosted CMK, either import or reference that key:
-            //    EncryptionKey = Key.FromKeyArn(this, "MyImportedKey", "arn:aws:kms:eu-west-1:235629185262:key/2b2ddf9b-2bfb-4d84-984c-36c934cb9d76"),
-            //});
 
             // Defines the artifact representing the sourcecode
             var sourceArtifact = new Artifact_();
@@ -34,10 +22,6 @@ namespace ProjectCdk
             var cloudAssemblyArtifact = new Artifact_();
 
             ISecret mySecret = Secret.FromSecretNameV2(this, "GitHubPersonalAccessToken", "GitHubPersonalAccessToken");
-            //var putEndpoint = new CfnOutput(this, "secret", new CfnOutputProps
-            //{
-            //    Value = mySecret.SecretValue.ToString()
-            //});;
             //SecretValue oauth = SecretValue.SecretsManager("arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at");
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline
@@ -46,15 +30,11 @@ namespace ProjectCdk
                 PipelineName = "ProjectPipeline",
                 CloudAssemblyArtifact = cloudAssemblyArtifact,
 
-                //SourceAction = new BitBucketSourceAction(new BitBucketSourceActionProps
-                //{
-                //}
-                    SourceAction = new GitHubSourceAction(new GitHubSourceActionProps
+                SourceAction = new GitHubSourceAction(new GitHubSourceActionProps
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    OauthToken = mySecret.SecretValue,//SecretValue.PlainText(token.ValueAsString),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
-                    //Trigger = GitHubTrigger.WEBHOOK,
+                    OauthToken = mySecret.SecretValue,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",
                     Repo = "project-cdk",
@@ -75,9 +55,9 @@ namespace ProjectCdk
             }) ;
 
             //create an instance of the stage 
-            //var deploy = new ProjectPipelineStage(this, "Deploy");
+            var deploy = new ProjectPipelineStage(this, "Deploy");
             //then add that stage to our pipeline
-            //var deployStage = pipeline.AddApplicationStage(deploy);
+            var deployStage = pipeline.AddApplicationStage(deploy);
             //var deployStage = pipeline.AddStage("Deploy");
 
             //deployStage.AddActions(new ElasticBeanStalkDeployAction(new ElasticBeanStalkDeployActionProps()

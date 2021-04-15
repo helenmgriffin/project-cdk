@@ -14,11 +14,11 @@ namespace ProjectCdk
         [System.Obsolete]
         public ProjectPipelineStack(Construct parent, string id, IStackProps props = null) : base(parent, id, props)
         {
-            var token = new CfnParameter(this, "GitHubPersonalAccessToken", new CfnParameterProps
-            {
-                Type = "String",
-                Description = "The GitHub Personal Access Token"
-            });
+            //var token = new CfnParameter(this, "GitHubPersonalAccessToken", new CfnParameterProps
+            //{
+            //    Type = "String",
+            //    Description = "The GitHub Personal Access Token"
+            //});
 
             //var secret = Secret.FromSecretAttributes(this, "GitHubPersonalAccessToken", new SecretAttributes
             //{
@@ -33,7 +33,7 @@ namespace ProjectCdk
             // (cloudformation template + all other assets)
             var cloudAssemblyArtifact = new Artifact_();
 
-            //ISecret mySecret = Secret.FromSecretNameV2(this, "GitHubPersonalAccessToken", "GitHubPersonalAccessToken");
+            ISecret mySecret = Secret.FromSecretNameV2(this, "GitHubPersonalAccessToken", "GitHubPersonalAccessToken");
             //var putEndpoint = new CfnOutput(this, "secret", new CfnOutputProps
             //{
             //    Value = mySecret.SecretValue.ToString()
@@ -53,7 +53,7 @@ namespace ProjectCdk
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    OauthToken = SecretValue.PlainText(token.ValueAsString),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
+                    OauthToken = mySecret.SecretValue,//SecretValue.PlainText(token.ValueAsString),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
                     //Trigger = GitHubTrigger.WEBHOOK,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",

@@ -23,7 +23,7 @@ namespace ProjectCdk
             {
                 // This imports the default VPC but you can also
                 // specify a 'vpcName' or 'tags'.
-                IsDefault = true
+                IsDefault = true,
             });
             // Create an ECS cluster
             Cluster cluster = new Cluster(this, "CollegeProjectCluster", new ClusterProps { Vpc = vpc });

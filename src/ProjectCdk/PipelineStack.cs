@@ -14,6 +14,10 @@ namespace ProjectCdk
         public ProjectPipelineStack(Construct parent, string id, IStackProps props = null) : base(parent, id, props)
         {
 
+            Environment env = new Environment();
+            env.Account = "235629185262";//System.Environment.GetEnvironmentVariable("CDK_DEFAULT_ACCOUNT");//app.Account;
+            env.Region = "eu-west-1";// System.Environment.GetEnvironmentVariable("CDK_DEFAULT_REGION");// app.Region;
+
             // Defines the artifact representing the sourcecode
             var sourceArtifact = new Artifact_();
             // Defines the artifact representing the cloud assembly 
@@ -53,8 +57,9 @@ namespace ProjectCdk
 
             }) ;
 
+
             //create an instance of the stage 
-            var deploy = new ProjectPipelineStage(this, "Deploy", new Amazon.CDK.StageProps { Env = props.Env });
+            var deploy = new ProjectPipelineStage(this, "Deploy");
             //then add that stage to our pipeline
             var deployStage = pipeline.AddApplicationStage(deploy);
             //var deployStage = pipeline.AddStage("Deploy");

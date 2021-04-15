@@ -8,7 +8,7 @@ namespace ProjectCdk
         //public readonly CfnOutput HCViewerUrl;
         //public readonly CfnOutput HCEndpoint;
 
-        public ProjectPipelineStage(Construct scope, string id, StageProps props) : base(scope , id, props)
+        public ProjectPipelineStage(Construct scope, string id, StageProps props = null) : base(scope , id, props)
         {
             //this declares a new Stage(component of a pipeline), and in that stage instantiate our application stack.(ProjectCdkStack)
             //var service = new DynamoDBStack(this, "DynamoDBStack");

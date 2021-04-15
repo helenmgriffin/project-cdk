@@ -1,15 +1,9 @@
 ﻿using Amazon.CDK;
 using Amazon.CDK.AWS.EC2;
-using Amazon.CDK.AWS.Ecr.Assets;
 using Amazon.CDK.AWS.ECR;
 using Amazon.CDK.AWS.ECS;
 using Amazon.CDK.AWS.ECS.Patterns;
-//using Amazon.CDK.AWS.ECS.Patterns;
 using Amazon.CDK.AWS.ElasticLoadBalancingV2;
-using System.Collections.Generic;
-//using Amazon.CDK.AWS.ECS.Patterns;
-//using Amazon.CDK.AWS.ElasticLoadBalancingV2;
-using System.IO;
 
 namespace ProjectCdk
 {
@@ -22,10 +16,15 @@ namespace ProjectCdk
     {
         public readonly CfnOutput externalDNS;
 
-        internal HelpDeskFargateStack(Construct scope, string id, CommonProps props) : base(scope, id, props)
+        internal HelpDeskFargateStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
-            //New VPC
-            IVpc vpc = new Vpc(this, "CollegeProjectVpc", new VpcProps { MaxAzs = 2 });
+            //Existing VPC
+            IVpc vpc = Vpc.FromLookup(this, "VPC", new VpcLookupOptions
+            {
+                // This imports the default VPC but you can also
+                // specify a 'vpcName' or 'tags'.
+                IsDefault = true
+            });
             // Create an ECS cluster
             Cluster cluster = new Cluster(this, "CollegeProjectCluster", new ClusterProps { Vpc = vpc });
             

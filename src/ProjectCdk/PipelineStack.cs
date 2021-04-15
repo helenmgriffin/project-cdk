@@ -11,7 +11,6 @@ namespace ProjectCdk
 {
     public class ProjectPipelineStack : Stack
     {
-        [System.Obsolete]
         public ProjectPipelineStack(Construct parent, string id, IStackProps props = null) : base(parent, id, props)
         {
 

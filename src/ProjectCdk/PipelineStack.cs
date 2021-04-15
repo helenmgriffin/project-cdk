@@ -2,6 +2,7 @@ using Amazon.CDK;
 using Amazon.CDK.AWS.CodeCommit;
 using Amazon.CDK.AWS.CodePipeline;
 using Amazon.CDK.AWS.CodePipeline.Actions;
+using Amazon.CDK.AWS.SecretsManager;
 using Amazon.CDK.Pipelines;
 using System.Collections.Generic;
 
@@ -17,7 +18,8 @@ namespace ProjectCdk
             // (cloudformation template + all other assets)
             var cloudAssemblyArtifact = new Artifact_();
 
-            SecretValue oauth = SecretValue.SecretsManager("arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at");
+            ISecret mySecret = Secret.FromSecretNameV2(this, "GitHubPersonalAccessToken", "GitHubPersonalAccessToken");
+            //SecretValue oauth = SecretValue.SecretsManager("arn:aws:secretsmanager:eu-west-1:235629185262:secret:GitHubPersonalAccessToken-Be69at");
             // The basic pipeline declaration. This sets the initial structure
             // of our pipeline
             var pipeline = new CdkPipeline(this, "Pipeline", new CdkPipelineProps
@@ -29,8 +31,8 @@ namespace ProjectCdk
                 {
                     ActionName = "GitHub",
                     Output = sourceArtifact,
-                    OauthToken = oauth,//SecretValue.PlainText("93e0ce2224fc2c0d1d07da23b77d4edba2bb68dc"),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
-                    Trigger = GitHubTrigger.WEBHOOK,
+                    OauthToken = mySecret.SecretValue,//SecretValue.PlainText("93e0ce2224fc2c0d1d07da23b77d4edba2bb68dc"),//.PlainText("a9535df8d5185be0c2644a5247d35c97c601d9d5"), //("GitHubPersonalAccessToken"), //("GitHubPersonalAccessToken", "1"), 
+                    //Trigger = GitHubTrigger.WEBHOOK,
                     // Replace these with your actual GitHub project name
                     Owner = "helenmgriffin",
                     Repo = "project-cdk",
@@ -50,10 +52,10 @@ namespace ProjectCdk
             }) ; 
 
             //create an instance of the stage 
-            var deploy = new ProjectPipelineStage(this, "Deploy");
+            //var deploy = new ProjectPipelineStage(this, "Deploy");
             //then add that stage to our pipeline
             //var deployStage = pipeline.AddApplicationStage(deploy);
-            var deployStage = pipeline.AddStage("Deploy");
+            //var deployStage = pipeline.AddStage("Deploy");
 
             //deployStage.AddActions(new ElasticBeanStalkDeployAction(new ElasticBeanStalkDeployActionProps()
             //{

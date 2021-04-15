@@ -1,11 +1,11 @@
 ﻿using Amazon.CDK;
 using Amazon.CDK.AWS.EC2;
 using Amazon.CDK.AWS.Ecr.Assets;
+using Amazon.CDK.AWS.ECR;
 using Amazon.CDK.AWS.ECS;
-//using Amazon.CDK.AWS.ECS.Patterns;
+using Amazon.CDK.AWS.ECS.Patterns;
 using Amazon.CDK.AWS.ElasticLoadBalancingV2;
-//using Amazon.CDK.AWS.ECS.Patterns;
-//using Amazon.CDK.AWS.ElasticLoadBalancingV2;
+using System.Collections.Generic;
 using System.IO;
 
 namespace ProjectCdk
@@ -15,101 +15,85 @@ namespace ProjectCdk
     /// Define a ECS service that runs by loading a public image from Docker Hub
     /// Then create a load balancer and add the service to it
     /// </summary>
-    public class HelpDeskEc2Stack : Stack
+    public class HelpDeskEC2Stack : Stack
     {
         public readonly CfnOutput externalDNS;
 
-        internal HelpDeskEc2Stack(Construct scope, string id, StackProps props) : base(scope, id, props)
+        internal HelpDeskEC2Stack(Construct scope, string id, CommonProps props) : base(scope, id, props)
         {
-            IVpc vpc = new Vpc(this, "HelpDeskVpc", new VpcProps { MaxAzs = 2 });
-            // Create an ECS cluster
-            Cluster cluster = new Cluster(this, "HelpDeskVpcCluster", new ClusterProps { Vpc = vpc });
-
-            //var asset = new DockerImageAsset(this, "CollegeProjectImage", new DockerImageAssetProps
+            //Use existing VPC
+            //IVpc vpc = Vpc.FromLookup(this, "VPC", new VpcLookupOptions
             //{
-            //    Directory = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "CollegeProject"))
+            //    // This imports the default VPC but you can also
+            //    // specify a 'vpcName' or 'tags'.
+            //    IsDefault = true
             //});
 
-            //// Create a load-balanced Fargate service and make it public
-            //ApplicationLoadBalancedFargateService fargateService = new ApplicationLoadBalancedFargateService(this, "HelpDeskFargateService",
-            //    new ApplicationLoadBalancedFargateServiceProps
-            //    {
-            //        Cluster = cluster,          // Required
-            //        DesiredCount = 1,           // Default is 1
-            //        TaskImageOptions = new ApplicationLoadBalancedTaskImageOptions
-            //        {
-            //            Image = ContainerImage.FromDockerImageAsset(asset),//ContainerImage.FromRegistry("helenmgriffin/collegeproject:latest")
-            //        },
-            //        MemoryLimitMiB = 512,      // Default is 256
-            //        PublicLoadBalancer = true    // Default is false
-            //    }
-            //);;
+            IVpc vpc = new Vpc(this, "CollegeProjectVpc", new VpcProps { MaxAzs = 2 });
+            // Create an ECS cluster
+            Cluster cluster = new Cluster(this, "CollegeProjectCluster", new ClusterProps { Vpc = vpc });
 
-            //this.externalDNS = new CfnOutput(this, "HelpDeskExternaleDNS",
-            //    new CfnOutputProps
-            //    {
-            //        Value = fargateService.LoadBalancer.LoadBalancerDnsName
-            //    }
-            //);
-            // Add capacity to it
-            cluster.AddCapacity("HelpDeskVpcCapacity", new AddCapacityOptions
+            //Add capacity to it
+            cluster.AddCapacity("CollegeProjectVpcCapacity", new AddCapacityOptions
             {
                 InstanceType = new InstanceType("t2.micro")
             });
 
             //To run a task or service with Amazon EC2 launch type, use the Ec2TaskDefinition
-            Ec2TaskDefinition helpDeskTaskDef = new Ec2TaskDefinition(this, "HelpDeskEc2TaskDef");
+            Ec2TaskDefinition helpDeskTaskDef = new Ec2TaskDefinition(this, "CollegeProjectEC2TaskDef");
 
-            var helpDeskContainer = helpDeskTaskDef.AddContainer("HelpDeskContainer", new ContainerDefinitionOptions
+            ContainerDefinition helpDeskContainer = helpDeskTaskDef.AddContainer("CollegeProjectContainer", new ContainerDefinitionOptions
             {
-                // Use an image from DockerHub
-                Image = ContainerImage.FromRegistry("helenmgriffin/collegeproject"),
-                MemoryLimitMiB = 512,
-                Privileged = true
+                //AWS ECR Repo
+                Image = ContainerImage.FromEcrRepository(Repository.FromRepositoryName(this, "collegeprojectrepo", "collegeproject"), "latest"),
+                //Dockerhub Repo
+                //Image = ContainerImage.FromRegistry("helenmgriffin/collegeproject:latest")
                 //Environment = new Dictionary<string, string>
                 //{
-                //    ["GetEndpoint"] = props.getEndpoint.Value.ToString(),
-                //    ["GetByIDEndpoint"] = props.getByIDEndpoint.Value.ToString(),
-                //    ["PutEndpoint"] = props.putEndpoint.Value.ToString(),
-                //    ["UpdateEndpoint"] = props.updateEndpoint.Value.ToString()
+                //    ["GetEndpointUrl"] = props.getEndpoint,
+                //    ["GetByIDEndpointUrl"] = props.getByIDEndpoint,
+                //    ["CreateEndpointUrl"] = props.putEndpoint,
+                //    ["UpdateEndpointUrl"] = props.updateEndpoint
                 //}
-            }); ;
-            
+                MemoryLimitMiB = 512,
+                Privileged = true,
+            });
+
             helpDeskContainer.AddPortMappings(new PortMapping
             {
-                ContainerPort = 3000
+                ContainerPort = 80
             });
 
             // Instantiate an Amazon ECS Service
-            Ec2Service helpDeskService = new Ec2Service(this, "HelpDeskService", new Ec2ServiceProps
+            Ec2Service collegeProjectService = new Ec2Service(this, "CollegeProjectService", new Ec2ServiceProps
             {
                 Cluster = cluster,
                 TaskDefinition = helpDeskTaskDef
             });
 
             // Internet facing load balancer for the frontend services
-            var externalLB = new ApplicationLoadBalancer(this, "ExternalLB", new ApplicationLoadBalancerProps
+            var externalLB = new ApplicationLoadBalancer(this, "CollegeProjectExternalLB", new Amazon.CDK.AWS.ElasticLoadBalancingV2.ApplicationLoadBalancerProps
             {
                 Vpc = vpc,
                 InternetFacing = true
             });
 
-            var externalListener = externalLB.AddListener("PublicListener", new BaseApplicationListenerProps
+            var externalListener = externalLB.AddListener("CollegeProjectPublicListener", new BaseApplicationListenerProps
             {
                 Port = 80,
                 Open = true
             });
 
             IApplicationLoadBalancerTarget[] targets = new IApplicationLoadBalancerTarget[1];
-            targets[0] = helpDeskService;
+            targets[0] = collegeProjectService;
 
-            externalListener.AddTargets("HelpDesk", new AddApplicationTargetsProps
+            externalListener.AddTargets("CollegeProject", new AddApplicationTargetsProps
             {
                 Port = 80,
                 Targets = targets
             });
 
-            this.externalDNS = new CfnOutput(this, "HelpDeskExternaleDNS", new CfnOutputProps
+            this.externalDNS = new CfnOutput(this, "CollegeProjectExternaleDNS", new CfnOutputProps
             {
                 Value = externalLB.LoadBalancerDnsName
             });

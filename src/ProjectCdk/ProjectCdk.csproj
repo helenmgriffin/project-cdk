@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <!-- Roll forward to future major versions of the netcoreapp as needed -->
     <RollForward>Major</RollForward>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +42,7 @@
     <PackageReference Include="Amazon.JSII.Runtime" Version="1.27.0" />
     <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
     <PackageReference Include="AWSSDK.ElasticBeanstalk" Version="3.7.0.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
 
     <!-- jsii Roslyn analyzers (un-comment to obtain compile-time checks for missing required props
     <PackageReference Include="Amazon.Jsii.Analyzers" Version="*" PrivateAssets="all" />

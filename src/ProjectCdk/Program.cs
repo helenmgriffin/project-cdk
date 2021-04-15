@@ -15,24 +15,23 @@ namespace ProjectCdk
             env.Region = "eu-west-1";// System.Environment.GetEnvironmentVariable("CDK_DEFAULT_REGION");// app.Region;
 
             //DynamoDBStack ds = new DynamoDBStack(app, "DynamoDBStack", new StackProps { Env = env });
-            //ds.DynamoStackProps.Env = env;
-            //new HelpDeskSiteStack(app, "HelpDeskSiteStack", new StackProps { Env = env });//, getEndpoint = ds.getEndpoint, getByIDEndpoint = ds.getByIDEndpoint, putEndpoint = ds.putEndpoint, updateEndpoint = ds.updateEndpoint });
-            //new ElasticbeanstalkEnvironmentStack(app, "ElasticbeanstalkEnvironmentStack", new StackProps { Env = env });
-            new HelpDeskEBSStack(app, "HelpDeskEBSStack", new StackProps { Env = env });
+            //CommonProps commonProps = ds.CommonStacProps;
 
-            //new DynamoDBStack(app, "DynamoDBStack", new StackProps { Env = env });
+            CommonProps commonProps = new CommonProps();
+            commonProps.updateEndpoint = "https://q3worczk9d.execute-api.eu-west-1.amazonaws.com/prod/";
+            commonProps.putEndpoint = "https://7tmjsi9uk4.execute-api.eu-west-1.amazonaws.com/prod/";
+            commonProps.getByIDEndpoint = "https://74sug7mg0d.execute-api.eu-west-1.amazonaws.com/prod/";
+            commonProps.getEndpoint = "https://p5fpyxi8ha.execute-api.eu-west-1.amazonaws.com/prod/";
+            commonProps.Env = env;
 
-            app.Synth();
+            //new HelpDeskFargateStack(app, "HelpDeskEc2Stack", commonProps);//, getEndpoint = ds.getEndpoint, getByIDEndpoint = ds.getByIDEndpoint, putEndpoint = ds.putEndpoint, updateEndpoint = ds.updateEndpoint });
+            //new HelpDeskEC2Stack(app, "HelpDeskEC2Stack", commonProps);
+            //new HelpDeskEBSStack(app, "HelpDeskEBSStack", new StackProps { Env = env });
 
             //change the entry point to deploy our pipeline. no longer want the main CDK application to deploy the original app.
-            //var app = new App();
-            //new ProjectPipelineStack(app, "ProjectPipelineStack");
+            new ProjectPipelineStack(app, "ProjectPipelineStack");
 
-            //app.Synth();
-            //var app = new App();
-            //new ProjectCdkStack(app, "ProjectCdkStack");
-
-            //app.Synth();
+            app.Synth();
         }
 
 

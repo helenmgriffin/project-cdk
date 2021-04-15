@@ -2,12 +2,12 @@
 
 namespace ProjectCdk
 {
-    public class DynamboDBProps : StackProps
+    public class CommonProps : StackProps
     {
-        public CfnOutput updateEndpoint { get; set; }
-        public CfnOutput getEndpoint { get; set; }
-        public CfnOutput getByIDEndpoint { get; set; }
-        public CfnOutput putEndpoint { get; set; }
+        public string updateEndpoint { get; set; }
+        public string getEndpoint { get; set; }
+        public string getByIDEndpoint { get; set; }
+        public string putEndpoint { get; set; }
 
     }
 }

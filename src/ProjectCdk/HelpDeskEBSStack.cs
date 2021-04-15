@@ -42,35 +42,6 @@ namespace ProjectCdk
 
             optionSettingProperties[1] = option2;
 
-            //CfnEnvironment.OptionSettingProperty option3 = new CfnEnvironment.OptionSettingProperty();
-            //option3.Namespace = "aws:autoscaling:launchconfiguration";
-            //option3.OptionName = "SecurityGroups";
-            //option3.Value = "sg-1eb07e44";
-
-            //optionSettingProperties[2] = option3;
-
-            //CfnEnvironment.OptionSettingProperty option4 = new CfnEnvironment.OptionSettingProperty();
-            //option4.Namespace = "aws:autoscaling:launchconfiguration";
-            //option4.OptionName = "Subnets";
-            //option4.Value = "cf7977a9";
-
-            //optionSettingProperties[3] = option4;
-
-            //CfnEnvironment.OptionSettingProperty option5 = new CfnEnvironment.OptionSettingProperty();
-            //option5.Namespace = "aws:autoscaling:launchconfiguration";
-            //option5.OptionName = "service-role";
-            //option5.Value = "aws-elasticbeanstalk-service-role";
-
-            //optionSettingProperties[4] = option5;
-
-            //CfnEnvironment.OptionSettingProperty option6 = new CfnEnvironment.OptionSettingProperty();
-            //option6.Namespace = "aws:autoscaling:launchconfiguration";
-            //option6.OptionName = "proxy-server";
-            //option6.Value = "nginx";
-
-            //optionSettingProperties[5] = option6;
-
-
             // Create an app version from the S3 asset defined above
             // The S3 "putObject" will occur first before CF generates the template
             var appVersionProps = new CfnApplicationVersion(this, "AppVersion", new CfnApplicationVersionProps

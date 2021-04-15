@@ -8,7 +8,7 @@ namespace ProjectCdk
 {
     public class DynamoDBStack: Stack
     {
-        public DynamboDBProps DynamoStackProps = new DynamboDBProps();
+        public CommonProps CommonStacProps = new CommonProps();
 
         internal DynamoDBStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
@@ -79,27 +79,12 @@ namespace ProjectCdk
             {
                 Value = putGateway.Url
             });
-            //This will create a new DynamoDB table called "Tickets" with the "TicketID" as a Partition Key(PK), 
-            //Billing mode is set to to Pay Per Request(no need to provide the write and read capacity. Not Provisioned) 
-            //Set to destroy the resource if we decide to delete
-            //Table table = new Table(this, "Tickets", new TableProps
-            //{
-            //    TableName = "Tickets",
-            //    PartitionKey = new Attribute { Name = "TicketID", Type = AttributeType.NUMBER },
-            //    BillingMode = BillingMode.PAY_PER_REQUEST,
-            //    RemovalPolicy = RemovalPolicy.DESTROY
-            //});
-            //var role = new Role(this, "DBRole", new RoleProps
-            //{
-            //    AssumedBy = new AccountPrincipal(this.Account)
-            //});
-            //table.GrantReadWriteData(role);
 
 
-            DynamoStackProps.getEndpoint = getEndpoint;
-            DynamoStackProps.getByIDEndpoint = getByIDEndpoint;
-            DynamoStackProps.putEndpoint = putEndpoint;
-            DynamoStackProps.updateEndpoint = updateEndpoint;
+            CommonStacProps.getEndpoint = getTicketsGateway.Url;
+            CommonStacProps.getByIDEndpoint = getTicketByIDGateway.Url;
+            CommonStacProps.putEndpoint = putGateway.Url;
+            CommonStacProps.updateEndpoint = updateTicketGateway.Url;
 
         }
     }

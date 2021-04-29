@@ -15,9 +15,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="ElasticBeanstalkEnvoirnmentStack.cs" />
     <Compile Remove="Helper.cs" />
     <Compile Remove="HitCounter.cs" />
     <Compile Remove="ProjectCdkStack.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Dockerfile" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +52,18 @@
     <!-- jsii Roslyn analyzers (un-comment to obtain compile-time checks for missing required props
     <PackageReference Include="Amazon.Jsii.Analyzers" Version="*" PrivateAssets="all" />
     -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\.dockerignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\.dockerignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\.dockerignore" />
   </ItemGroup>
 
 </Project>

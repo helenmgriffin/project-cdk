@@ -33,7 +33,7 @@ namespace ProjectCdk
             //  Set to destroy the resource if we decide to delete
             var table = new Table(this, "Tickets", new TableProps
             {
-                TableName = "Tickets2",
+                TableName = "TicketsDB",
                 PartitionKey = new Attribute
                 {
                     Name = "TicketGUID",

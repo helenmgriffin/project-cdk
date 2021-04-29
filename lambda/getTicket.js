@@ -2,16 +2,30 @@ var doc = require('aws-sdk');
 var dynamo = new doc.DynamoDB.DocumentClient();
 
 exports.handler = async function (event, context) {
-    var condition = {};
-    condition["TicketGUID"] = {
-        ComparisonOperator: 'EQ',
-        AttributeValueList: [{ S: event.ticketGUID }]
+    //var condition = {};
+    //condition["TicketGUID"] = {
+    //    ComparisonOperator: 'EQ',
+    //    AttributeValueList: [{ S: event.TicketGuid }]
+    //}
+    let body;
+    if (event.body !== null && event.body !== undefined) {
+        body = JSON.parse(event.body);
     }
+    else
+        body = event;
 
+    console.log(body);
     var getParams = {
         TableName: process.env.TABLE_NAME,
-/*        ProjectionExpression: 'TicketID,Summary',*/
-        KeyConditions: condition
+        KeyConditionExpression: "#TicketGUID = :TicketGUID",
+        ExpressionAttributeNames: {
+            "#TicketGUID": "TicketGUID"
+        },
+        ExpressionAttributeValues: {
+            ":TicketGUID": body.TicketGuid
+        }
+        /*        ProjectionExpression: 'TicketID,Summary',*/
+        //KeyConditions: condition
     };
 
     let response;

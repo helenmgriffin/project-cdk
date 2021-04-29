@@ -50,10 +50,10 @@ namespace ProjectCdk
                 //Image = ContainerImage.FromRegistry("helenmgriffin/collegeproject:latest")
                 Environment = new Dictionary<string, string>
                 {
-                    ["GetEndpointUrl"] = props.getEndpoint,
-                    ["GetByIDEndpointUrl"] = props.getByIDEndpoint,
-                    ["CreateEndpointUrl"] = props.putEndpoint,
-                    ["UpdateEndpointUrl"] = props.updateEndpoint
+                    ["GetTicketsGatewayUrl"] = props.getEndpoint,
+                    ["GetTicketByIDGatewayUrl"] = props.getByIDEndpoint,
+                    ["PutTicketGatewayUrl"] = props.putEndpoint,
+                    ["UpdateTicketGatewayUrl"] = props.updateEndpoint
                 },
                 MemoryLimitMiB = 512,
                 Privileged = true,

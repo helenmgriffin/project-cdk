@@ -17,7 +17,7 @@ exports.handler = async function (event, context) {
                 S: body.TicketGuid
             },
             "TicketNumber": {
-                N: body.TicketNumber
+                N: String(body.TicketNumber)
             },
             "Summary": {
                 S: body.Summary

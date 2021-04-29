@@ -48,16 +48,16 @@ namespace ProjectCdk
                 Image = ContainerImage.FromEcrRepository(Repository.FromRepositoryName(this, "collegeprojectrepo", "collegeproject"), "latest"),
                 //Dockerhub Repo
                 //Image = ContainerImage.FromRegistry("helenmgriffin/collegeproject:latest")
-                //Environment = new Dictionary<string, string>
-                //{
-                //    ["GetEndpointUrl"] = props.getEndpoint,
-                //    ["GetByIDEndpointUrl"] = props.getByIDEndpoint,
-                //    ["CreateEndpointUrl"] = props.putEndpoint,
-                //    ["UpdateEndpointUrl"] = props.updateEndpoint
-                //}
+                Environment = new Dictionary<string, string>
+                {
+                    ["GetEndpointUrl"] = props.getEndpoint,
+                    ["GetByIDEndpointUrl"] = props.getByIDEndpoint,
+                    ["CreateEndpointUrl"] = props.putEndpoint,
+                    ["UpdateEndpointUrl"] = props.updateEndpoint
+                },
                 MemoryLimitMiB = 512,
                 Privileged = true,
-            });
+            });;
 
             helpDeskContainer.AddPortMappings(new PortMapping
             {

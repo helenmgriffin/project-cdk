@@ -4,6 +4,7 @@ using Amazon.CDK.AWS.ECR;
 using Amazon.CDK.AWS.ECS;
 using Amazon.CDK.AWS.ECS.Patterns;
 using Amazon.CDK.AWS.ElasticLoadBalancingV2;
+using System.Collections.Generic;
 
 namespace ProjectCdk
 {
@@ -16,7 +17,7 @@ namespace ProjectCdk
     {
         public readonly CfnOutput externalDNS;
 
-        internal HelpDeskFargateStack(Construct scope, string id, StackProps props = null) : base(scope, id, props)
+        internal HelpDeskFargateStack(Construct scope, string id, CommonProps props = null) : base(scope, id, props)
         {
             //Existing VPC
             //IVpc vpc = Vpc.FromLookup(this, "VPC", new VpcLookupOptions
@@ -44,13 +45,13 @@ namespace ProjectCdk
                         Image = ContainerImage.FromEcrRepository(Repository.FromRepositoryName(this, "collegeprojectrepo", "collegeproject"), "latest"),
                         //Dockerhub Repo
                         //Image = ContainerImage.FromRegistry("helenmgriffin/collegeproject:latest")
-                        //Environment = new Dictionary<string, string>
-                        //{
-                        //    ["GetEndpointUrl"] = props.getEndpoint,
-                        //    ["GetByIDEndpointUrl"] = props.getByIDEndpoint,
-                        //    ["CreateEndpointUrl"] = props.putEndpoint,
-                        //    ["UpdateEndpointUrl"] = props.updateEndpoint
-                        //}
+                        Environment = new Dictionary<string, string>
+                        {
+                            ["GetEndpointUrl"] = props.getEndpoint,
+                            ["GetByIDEndpointUrl"] = props.getByIDEndpoint,
+                            ["CreateEndpointUrl"] = props.putEndpoint,
+                            ["UpdateEndpointUrl"] = props.updateEndpoint
+                        }
                     },
                     MemoryLimitMiB = 512,      // Default is 256
                     PublicLoadBalancer = true,    // Default is false

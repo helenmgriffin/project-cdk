@@ -16,7 +16,7 @@ namespace ProjectCdk
             Asset elbZipArchive = new Asset(this, "HelpDeskAppZip", new AssetProps
             {
                 //Path = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "publish"), "CollegeProject")
-                Path = Path.Join("C:\\CollegeProjectWebSite", "CollegeProjectWebSite.zip")
+                Path = Path.Join(Directory.GetCurrentDirectory(), "CollegeProjectWebSite.zip")
             });
 
             var appName = "CollegeProject";

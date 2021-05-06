@@ -61,36 +61,7 @@ namespace ProjectCdk
             var deploy = new ProjectPipelineStage(this, "Deploy");
             //then add that stage to our pipeline
             var deployStage = pipeline.AddApplicationStage(deploy);
-
-            //deployStage.AddActions(new ElasticBeanStalkDeployAction(new ElasticBeanStalkDeployActionProps()
-            //{
-            //    Input = new Artifact_("SourceArtifact"),
-            //    ActionName = "Deploy",
-            //    ApplicationName = "CollegeProject",
-            //    EnvironmentName = "CollegeProject-MVCEBEnvironment"
-            //}));
-
-            //deployStage.AddActions(new ShellScriptAction(new ShellScriptActionProps
-            //{
-            //    ActionName = "TestViewerEndpoint",
-            //    UseOutputs = new Dictionary<string, StackOutput> {
-            //        { "ENDPOINT_URL", pipeline.StackOutput(deploy.HCViewerUrl) }
-            //    },
-            //    Commands = new string[] { "curl -Ssf $ENDPOINT_URL" }
-            //}));
-
-            //deployStage.AddActions(new ShellScriptAction(new ShellScriptActionProps
-            //{
-            //    ActionName = "TestAPIGatewayEndpoint",
-            //    UseOutputs = new Dictionary<string, StackOutput> {
-            //        { "ENDPOINT_URL", pipeline.StackOutput(deploy.HCEndpoint)  }
-            //    },
-            //    Commands = new string[] {
-            //        "curl -Ssf $ENDPOINT_URL/",
-            //        "curl -Ssf $ENDPOINT_URL/hello",
-            //        "curl -Ssf $ENDPOINT_URL/test"
-            //    }
-            //}));
+           
         }
     }
 }

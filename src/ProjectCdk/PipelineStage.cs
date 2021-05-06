@@ -5,18 +5,14 @@ namespace ProjectCdk
 {
     public class ProjectPipelineStage : Stage
     {
-        //public readonly CfnOutput HCViewerUrl;
-        //public readonly CfnOutput HCEndpoint;
-
         public ProjectPipelineStage(Construct scope, string id, StageProps props = null) : base(scope , id, props)
         {
-            //this declares a new Stage(component of a pipeline), and in that stage instantiate our application stack.(ProjectCdkStack)
+            //this declares a new Stage(component of a pipeline),
+            //and in that stage instantiate our application stacks.(DynamoDBStackCDK and HelpDeskFargateStack)
             var ds = new DynamoDBStack(this, "DynamoDBStackCDK");
-       
-            new HelpDeskFargateStack(this, "HelpDeskFargateStack", ds.CommonStacProps);//, getEndpoint = ds.getEndpoint, getByIDEndpoint = ds.getByIDEndpoint, putEndpoint = ds.putEndpoint, updateEndpoint = ds.updateEndpoint });
-
-            //this.HCEndpoint = service.HCEndpoint;
-            //this.HCViewerUrl = service.HCViewerUrl;
+            new HelpDeskFargateStack(this, "HelpDeskFargateStack", ds.CommonStacProps);
+            new HelpDeskEC2Stack(this, "HelpDeskEC2Stack", ds.CommonStacProps);
+            new HelpDeskEBSStack(this, "HelpDeskEBSStack");
         }
     }
 }

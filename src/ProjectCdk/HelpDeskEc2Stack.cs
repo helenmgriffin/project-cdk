@@ -21,14 +21,6 @@ namespace ProjectCdk
 
         internal HelpDeskEC2Stack(Construct scope, string id, CommonProps props) : base(scope, id, props)
         {
-            //Use existing VPC
-            //IVpc vpc = Vpc.FromLookup(this, "VPC", new VpcLookupOptions
-            //{
-            //    // This imports the default VPC but you can also
-            //    // specify a 'vpcName' or 'tags'.
-            //    IsDefault = true
-            //});
-
             IVpc vpc = new Vpc(this, "CollegeProjectVpc", new VpcProps { MaxAzs = 2 });
             // Create an ECS cluster
             Cluster cluster = new Cluster(this, "CollegeProjectCluster", new ClusterProps { Vpc = vpc });
@@ -46,8 +38,8 @@ namespace ProjectCdk
             {
                 //AWS ECR Repo
                 Image = ContainerImage.FromEcrRepository(Repository.FromRepositoryName(this, "collegeprojectrepo", "collegeproject"), "latest"),
-                //Dockerhub Repo
-                //Image = ContainerImage.FromRegistry("helenmgriffin/collegeproject:latest")
+
+                //Pass API Endpoints to docker image environment variables
                 Environment = new Dictionary<string, string>
                 {
                     ["GetTicketsGatewayUrl"] = props.getEndpoint,

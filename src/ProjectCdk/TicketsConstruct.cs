@@ -52,6 +52,15 @@ namespace ProjectCdk
             Runtime runtime = Runtime.NODEJS_12_X;
             Code code = Code.FromAsset("lambda");
 
+            // Defines a new lambda resource
+            PutHandler = new Function(this, "PutTicket", new FunctionProps
+            {
+                Runtime = runtime,// execution environment
+                Code = code,// Code loaded from the "lambda" directory
+                Handler = "putTicket.handler",// file is "putTickets", function is "handler"
+                Environment = environment
+            });
+
             UpdateHandler = new Function(this, "UpdateTicket", new FunctionProps
             {
                 Runtime = runtime,
@@ -78,14 +87,7 @@ namespace ProjectCdk
                 Environment = environment
             });
 
-            // Defines a new lambda resource
-            PutHandler = new Function(this, "PutTicket", new FunctionProps
-            {
-                Runtime = runtime,// execution environment
-                Code = code,// Code loaded from the "lambda" directory
-                Handler = "putTicket.handler",// file is "getTickets", function is "handler"
-                Environment = environment
-            });
+            
 
             // Grant the lambda role read/write permissions to our table
             table.GrantReadWriteData(UpdateHandler);

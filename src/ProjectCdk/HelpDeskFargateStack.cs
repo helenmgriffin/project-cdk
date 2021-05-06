@@ -10,7 +10,7 @@ namespace ProjectCdk
 {
     /// <summary>
     /// ECS constructs to set up website application environment
-    /// Define a ECS service that runs by loading a public image from Docker Hub
+    /// Define a ECS service that runs by loading a image from ECR Repository
     /// Then create a load balancer and add the service to it
     /// </summary>
     public class HelpDeskFargateStack : Stack
@@ -19,14 +19,6 @@ namespace ProjectCdk
 
         internal HelpDeskFargateStack(Construct scope, string id, CommonProps props = null) : base(scope, id, props)
         {
-            //Existing VPC
-            //IVpc vpc = Vpc.FromLookup(this, "VPC", new VpcLookupOptions
-            //{
-            //    // This imports the default VPC but you can also
-            //    // specify a 'vpcName' or 'tags'.
-            //    IsDefault = true,
-            //});
-
             //New VPC
             IVpc vpc = new Vpc(this, "CollegeProjectVpc", new VpcProps { MaxAzs = 2 });
 
@@ -43,8 +35,6 @@ namespace ProjectCdk
                     {
                         //AWS ECR Repo
                         Image = ContainerImage.FromEcrRepository(Repository.FromRepositoryName(this, "collegeprojectrepo", "collegeproject"), "latest"),
-                        //Dockerhub Repo
-                        //Image = ContainerImage.FromRegistry("helenmgriffin/collegeproject:latest")
                         Environment = new Dictionary<string, string>
                         {
                             ["GetTicketsGatewayUrl"] = props.getEndpoint,

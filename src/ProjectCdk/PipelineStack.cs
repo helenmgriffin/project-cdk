@@ -46,7 +46,7 @@ namespace ProjectCdk
                     SourceArtifact = sourceArtifact,  // Where to get source code to build
                     CloudAssemblyArtifact = cloudAssemblyArtifact,  // Where to place built source
 
-                    //setup and install our CDKPipelein environment
+                    //setup and install our CDKPipeline environment
                     InstallCommand = "npm install -g aws-cdk " +
                     "&& wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb " +
                     "&& dpkg -i packages-microsoft-prod.deb && apt-get update " +
